@@ -6,13 +6,12 @@ from funcionario.models import Funcionario
 
 class Comentario(models.Model):
 
-    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
-    com_nome = models.CharField(max_length=50) 
+    com_nome = models.CharField(max_length=60) 
     conteudo = models.TextField()
-    ano = models.DateField(default=datetime.today().year)
-    data_env = models.DateField(auto_now_add=True)
+    ano = models.DateTimeField(default=datetime.today().year)
+    data_env = models.DateTimeField(auto_now_add=True)
     state = models.IntegerField(default=0)
     func_id = models.ForeignKey(Funcionario, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.com_nome
+        return f'<Comentario: {self.com_nome}>'

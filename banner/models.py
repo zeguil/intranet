@@ -8,8 +8,10 @@ class Banner(models.Model):
     conteudo = models.TextField()
     hasPage = models.BooleanField(default=False)
     image = models.ImageField(upload_to='banner', blank=True, null=True )
-    data_pub = models.DateField(auto_now_add=True)
+    data_pub = models.DateTimeField(auto_now_add=True)
     state = models.IntegerField(default=0)
+    ordem = models.IntegerField(null=True)
+    link_externo = models.Charfield(max_length=255)
 
     def __str__(self):
         return f'<Banner: {self.titulo}>'
