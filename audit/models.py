@@ -5,7 +5,7 @@ from django.db import models
 class Audit(models.Model):
 
     tabela = models.CharField(max_length=60)
-    createdon = models.DateTimeField(auto_now_add=True)
+    createdon = models.DateField(auto_now_add=True)
     ip = models.CharField(max_length=60)
     action = models.CharField(max_length=240)
     hostname = models.CharField(max_length=60)

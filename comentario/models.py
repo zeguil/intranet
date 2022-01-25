@@ -8,8 +8,8 @@ class Comentario(models.Model):
 
     com_nome = models.CharField(max_length=60) 
     conteudo = models.TextField()
-    ano = models.DateTimeField(default=datetime.today().year)
-    data_env = models.DateTimeField(auto_now_add=True)
+    ano = models.DateField(default=datetime.today().year)
+    data_env = models.DateField(default=datetime.today())
     state = models.IntegerField(default=0)
     func_id = models.ForeignKey(Funcionario, on_delete=models.CASCADE)
 
