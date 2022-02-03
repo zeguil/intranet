@@ -9,7 +9,7 @@ class Comentario(models.Model):
     com_nome = models.CharField(max_length=60) 
     conteudo = models.TextField()
     ano = models.DateField(default=datetime.today().year)
-    data_env = models.DateField(default=datetime.today())
+    data_env = models.DateField(auto_now_add=True)
     state = models.IntegerField(default=0)
     func_id = models.ForeignKey(Funcionario, on_delete=models.CASCADE)
 

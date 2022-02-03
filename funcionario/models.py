@@ -1,15 +1,14 @@
 from django.db import models
 from setor.models import Setor
-from comentario.models import Comentario
 from uuid import uuid4
 
 
 class Funcionario(models.Model):
-    nome = models.CharField(max_length=60, index=True)
+    nome = models.CharField(max_length=60)
     dia_nasc = models.IntegerField()
     mes_nasc = models.CharField(max_length=20)
     setor_id = models.ForeignKey(Setor, on_delete=models.CASCADE)
-    state = models.DateField(auto_now=True)
+    state = models.BooleanField()
 
     def __str__(self):
-        return self.func_nome
+        return self.nome

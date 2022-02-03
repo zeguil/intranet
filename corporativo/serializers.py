@@ -1,7 +1,7 @@
 from rest_framework.serializers import ModelSerializer
-from .models import Comentario
+from .models import Corporativo
 
-class ComentarioSerializer(ModelSerializer):
+class CorporativoSerializer(ModelSerializer):
     class Meta:
-        model = Comentario
+        model = Corporativo
         fields = '__all__'
