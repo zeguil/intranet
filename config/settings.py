@@ -32,7 +32,7 @@ INSTALLED_APPS = [
     'django_filters',
 
     #apss
-    'administrador',
+    'users',
     'informativo',
     'corporativo',
     'funcionario',
@@ -125,7 +125,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = 'imagens'
+MEDIA_ROOT = 'media'
 
 MEDIA_URL = '/media/'
 
@@ -140,4 +140,8 @@ REST_FRAMEWORK = {
     # 'DEFAULT_PERMISSION_CLASSES': (
     #     'rest_framework.permissions.IsAuthenticatedOrReadOnly'
     # )
+    'DEFAULT_PAGINATION_CLASS' : 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 2
 }
+
+AUTH_USER_MODEL = 'users.User'
