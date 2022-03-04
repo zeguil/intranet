@@ -1,0 +1,4 @@
+error_messages={'unique': "O email cadastrado já existe."}
+
+
+usuario publicador tem permissão para completa em informativos e banners
