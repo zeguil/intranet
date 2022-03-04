@@ -6,31 +6,29 @@ from rest_framework.authtoken.models import Token
 from django.conf import settings
 
 class MyUserManager(BaseUserManager):
-    def create_user(self, cpf, password=None):
+    def create_user(self, cpf, password=None, **extra_fields):
      
         if not cpf:
             raise ValueError('O cpf deve ser definido')
-        if not password :
-            raise TypeError("Defina uma senha")
-        user = self.model(cpf=cpf)
+        user = self.model(cpf=cpf, **extra_fields)
         user.set_password(password)
         user.save()
         return user
 
-    def create_superuser(self, cpf, password=None):
-        if not cpf:
-            raise ValueError('O cpf deve ser definido')
-        if not password :
-            raise TypeError("Defina uma senha")
-        myuser = self.model(cpf=cpf)
-        myuser.set_password(password)
-        myuser.is_admin = True
-        myuser.is_staff = True
-        myuser.save()
+    def create_superuser(self, cpf, password, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault('is_active', True)
 
-        return myuser
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('O superusuário deve ter is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('O superusuário deve ter is_superuser=True.')
+        return self.create_user(cpf, password, **extra_fields)
         
 
+
+ 
 class User(AbstractBaseUser):
     cpf = models.CharField(max_length=10,unique=True)
     

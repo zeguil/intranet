@@ -1,15 +1,42 @@
-from flask import render_template, flash, redirect, url_for, request as frq
-from flask_login import login_required
+
 from . import home
 from .forms import FormularioMural
-from ..models import Ramal, Funcionario, Informativo, Comentario, Audit, Setor, Corporativo, Banner, Email
-from .. import db
+
 import requests
 from requests.exceptions import Timeout
 import socket
 import os
 from bs4 import BeautifulSoup
 from datetime import datetime
+
+from banner.models import Banner
+from comentario.models import Comentario
+from audit.models import Audit
+from corporativo.models import Corporativo
+from emails.models import Email
+from funcionario.models import Funcionario
+from informativo.models import Informativo
+from ramal.models import Ramal
+from setor.models import Setor
+
+# @api_view(["POST"]) 
+# @permission_classes([AllowAny]) 
+# def Register_Users(request): 
+#     try: 
+#         data = [] 
+#         serializer = RegistrationSerializer(data=request.data) 
+#         if serializer.is_valid(): 
+#             account = serializer.save () 
+#             account.is_active = True 
+#             account.save() 
+#             token = Token.objects.get_or_create(user=account)[0].key 
+#             data["message"] = "usuário registrado com sucesso" 
+#             data["email"] = conta. email 
+#             data["username"] = account.username 
+#             data["token"] = token 
+
+#         else: 
+#             data = serializer.erros 
 
 
 @home.route('/', methods=['GET', 'POST'])
