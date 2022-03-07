@@ -24,8 +24,10 @@ class UserSerializer(serializers.ModelSerializer):
 
     admin = serializers.BooleanField(
         label="Administrador",
-        help_text="Indica que este usuário tem todas as permissões sem atribuí-las explicitamente."
+        help_text="Indica que este usuário tem todas as permissões"
     )
+
+
 
     class Meta:
         model = User
@@ -38,7 +40,10 @@ class UserSerializer(serializers.ModelSerializer):
         conta = User(
             cpf=self.validated_data['cpf'],
             publisher=self.validated_data['publisher'],
-            admin=self.validated_data['admin']
+            admin=self.validated_data['admin'],
+            is_superuser=self.validated_data['admin'],
+            is_staff=self.validated_data['admin']
+            
         )
         password = self.validated_data['password']
         password_confirm = self.validated_data['password_confirm']
