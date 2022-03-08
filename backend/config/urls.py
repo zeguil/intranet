@@ -30,7 +30,7 @@ router.register(r'funcionario', FuncionarioViewSet)
 router.register(r'informativo', InformativoViewSet)
 router.register(r'ramal', RamalViewSet)
 router.register(r'setor', SetorViewSet)
-router.register(r'usuarios', UsuariosViewSet)
+router.register(r'usuarios', UsuariosViewSet, basename='UsuariosViewSet')
 
 
 urlpatterns = [

@@ -31,7 +31,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('cpf','password', 'password_confirm', 'publisher', 'admin','created_at', 'updated_at')
+        fields = ('cpf','password', 'password_confirm', 'publisher', 'admin','created_at', 'updated_at', 'is_active')
         extra_kwargs = {
             'password': {'write_only': True},
         }
@@ -45,6 +45,7 @@ class UserSerializer(serializers.ModelSerializer):
             is_staff=self.validated_data['admin']
             
         )
+        print("###########TESTE###########")
         password = self.validated_data['password']
         password_confirm = self.validated_data['password_confirm']
 
