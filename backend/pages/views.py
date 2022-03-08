@@ -25,7 +25,7 @@ from setor.models import Setor
 
 
 
-@api_view(["POST"]) 
+@api_view(["POST", "GET"]) 
 @permission_classes([AllowAny]) 
 def homepage(request):
 
@@ -111,7 +111,19 @@ def homepage(request):
 
     bannersPath = '../static/images/banners/'
 
-    return render('home/index.html', title="Imprensa Oficial IntraNet", news=news, imgs=imgs, status=status, niver=niver, mes=busca, banners=banners, bannersPath=bannersPath, hasModal=hasModal)
+    data = {
+        'title':"Imprensa Oficial IntraNet",
+        'news': news,
+        'imgs':imgs,
+        'status':status,
+        'niver':niver,
+        'mes':busca,
+        'banners':banners,
+        'bannersPath':bannersPath,
+        'hasModal':hasModal
+    }
+
+    return data
 
 
 @api_view(["GET"]) 
@@ -125,13 +137,6 @@ def ramais(request):
     mails = Email.objects.filter().order_by(Email.id).all()
 
     return render('home/ramais.html', corps=corps, ramais=ramais, mails=mails, title="Ramais")
-
-
-@api_view(["GET"]) 
-@permission_classes([AllowAny]) 
-def dashboard(request):
-
-    return render('home/dashboard.html', title="Admin Dashboard")
 
 
 @api_view(["GET"]) 
@@ -188,48 +193,48 @@ def info(request):
     return render('home/informativos.html', infos=infos, title='Informativos')
 
 
-# @api_view(["POST","GET"]) 
-# @permission_classes([AllowAny]) 
-# def mural(id):
+@api_view(["POST","GET"]) 
+@permission_classes([AllowAny]) 
+def mural(id):
 
-#     coments = Comentario.objects.filter(Comentario.func_id == id, Comentario.ano == datetime.today(
-#     ).year, Comentario.state == 0).order_by(Comentario.id.desc()).all()
+    coments = Comentario.objects.filter(Comentario.func_id == id, Comentario.ano == datetime.today(
+    ).year, Comentario.state == 0).order_by(Comentario.id.desc()).all()
 
-#     func = Funcionario.objects.get_or_404(id)
+    func = Funcionario.objects.get_or_404(id)
 
-#     nome = func.func_nome.strip()
+    nome = func.func_nome.strip()
 
-#     nome = nome.split(' ')[0] + ' ' + nome.split(' ')[-1]
+    nome = nome.split(' ')[0] + ' ' + nome.split(' ')[-1]
 
-#     nome = nome.title()
+    nome = nome.title()
 
-#     form = FormularioMural()
+    form = FormularioMural()
 
-#     if form.validate_on_submit(request):
+    if form.validate_on_submit(request):
 
-#         com_add = Comentario(
-#             com_nome=form.nome.data, conteudo=form.conteudo.data, func_id=id, data_env=datetime.now())
+        com_add = Comentario(
+            com_nome=form.nome.data, conteudo=form.conteudo.data, func_id=id, data_env=datetime.now())
 
-#         ip = frq.environ.get('HTTP_X_REAL_IP', frq.remote_addr)
-#         user = frq.remote_user
+        ip = frq.environ.get('HTTP_X_REAL_IP', frq.remote_addr)
+        user = frq.remote_user
 
-#         try:
-#             db.session.add(com_add)
-#             db.session.flush()
+        try:
+            db.session.add(com_add)
+            db.session.flush()
 
-#             audit = Audit(tabela='COMENTARIO', ip=ip, action='INSERT', hostname=socket.getfqdn(
-#                 ip), usuario=user, createdon=datetime.now(), id_tab=com_add.id)
-#             db.session.add(audit)
-#             db.session.commit()
+            audit = Audit(tabela='COMENTARIO', ip=ip, action='INSERT', hostname=socket.getfqdn(
+                ip), usuario=user, createdon=datetime.now(), id_tab=com_add.id)
+            db.session.add(audit)
+            db.session.commit()
 
-#             flash('Mensagem enviada!')
+            flash('Mensagem enviada!')
 
-#         except:
-#             raise('Error: Não foi possível enviar a mensagem!')
+        except:
+            raise('Error: Não foi possível enviar a mensagem!')
 
-#         return redirect('home.mural', id=func.id)
+        return redirect('home.mural', id=func.id)
 
-#     return render('home/mural.html', form=form, coments=coments, nome=nome, date=datetime)
+    return render('home/mural.html', form=form, coments=coments, nome=nome, date=datetime)
 
 # @api_view(["GET"]) 
 # @permission_classes([AllowAny])
@@ -252,50 +257,6 @@ def info(request):
 
 @api_view(["GET"]) 
 @permission_classes([AllowAny])
-def sistemas(request):
-
-    return render('home/sistemas.html')
-
-
-
-
-@api_view(["GET"]) 
-@permission_classes([AllowAny])
-def certifica_id(request):
-
-    return render('home/certifica-id-ioa.html')
-
-
-@api_view(["GET"]) 
-@permission_classes([AllowAny])
-def certifica_id_amazonprev(request):
-
-    return render('home/certifica-id-amazonprev.html')
-
-
-@api_view(["GET"]) 
-@permission_classes([AllowAny])
-def qrcode(request):
-
-    return render('home/qrcode.html')
-
-
-@api_view(["GET"]) 
-@permission_classes([AllowAny])
-def manuais(request): #manuais
-
-    return render('home/manuais.html')
-
-
-@api_view(["GET"]) 
-@permission_classes([AllowAny])
-def siged(request): #manuais/siged
-
-    return render('home/manuais/siged.html')
-
-
-@api_view(["GET"]) 
-@permission_classes([AllowAny])
 def noticias(id): #noticias/<id>
 
     banner = Banner.objects.get_or_404(id)
@@ -303,7 +264,3 @@ def noticias(id): #noticias/<id>
     return render('home/noticia.html', banner=banner)
 
 
-@api_view(["GET"]) 
-@permission_classes([AllowAny])
-def live(request):
-    return render('home/live.html')
