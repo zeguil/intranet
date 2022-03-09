@@ -272,14 +272,6 @@ class Noticias(APIView):
         return Response(serializer.data)
 
 
-@api_view(["GET"]) 
-@permission_classes([AllowAny])
-def noticias(id): #noticias/<id>
-
-    banner = Banner.objects.get_or_404(id)
-
-    return render('home/noticia.html', banner=banner)
-
 
 @api_view(["GET"]) 
 @permission_classes([AllowAny])
