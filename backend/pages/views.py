@@ -11,9 +11,14 @@ from datetime import datetime
 from django.shortcuts import render, redirect, HttpResponse
 from rest_framework.views import APIView
 from rest_framework.decorators import permission_classes, api_view
+from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny, IsAuthenticatedOrReadOnly
+from django.shortcuts import get_object_or_404
+from django.http import Http404
 
 from banner.models import Banner
+from banner.serializers import BannerSerializer
+
 from comentario.models import Comentario
 from audit.models import Audit
 from corporativo.models import Corporativo
@@ -190,17 +195,17 @@ def info(request):
     infos = Informativo.objects.filter(Informativo.state == 0).order_by(
         Informativo.id.desc()).limit(8).all()
 
-    return render('home/informativos.html', infos=infos, title='Informativos')
+    return infos
 
 
-@api_view(["POST","GET"]) 
-@permission_classes([AllowAny]) 
-def mural(id):
+class Mural(APIView):
+    def get(self, request, id):
+def mural(request, id):
 
     coments = Comentario.objects.filter(Comentario.func_id == id, Comentario.ano == datetime.today(
     ).year, Comentario.state == 0).order_by(Comentario.id.desc()).all()
 
-    func = Funcionario.objects.get_or_404(id)
+    func = get_object_or_404(Funcionario, pk=id)
 
     nome = func.func_nome.strip()
 
@@ -255,6 +260,18 @@ def mural(id):
 
 #     return render('home/redirect.html', info=info)
 
+class Noticias(APIView):
+    def get(self, request, id):
+        try:
+            banner = Banner.objects.get(pk=id)
+            serializer = BannerSerializer(banner)
+
+        except Banner.DoesNotExist:
+            raise Http404("Banner não encontrado....")
+
+        return Response(serializer.data)
+
+
 @api_view(["GET"]) 
 @permission_classes([AllowAny])
 def noticias(id): #noticias/<id>
@@ -263,4 +280,49 @@ def noticias(id): #noticias/<id>
 
     return render('home/noticia.html', banner=banner)
 
+
+@api_view(["GET"]) 
+@permission_classes([AllowAny])
+def sistemas():
+
+    return 
+
+@api_view(["GET"]) 
+@permission_classes([AllowAny])
+def certifica_id(): #/id-am
+
+    return 
+
+
+@api_view(["GET"]) 
+@permission_classes([AllowAny])
+def certifica_id_amazonprev(): #/certifica
+
+    return 
+
+
+@api_view(["GET"]) 
+@permission_classes([AllowAny])
+def qrcode(): #/QRCODE
+
+    return 
+
+
+@api_view(["GET"]) 
+@permission_classes([AllowAny])
+def manuais(): #/manuais
+
+    return 
+
+
+@api_view(["GET"]) 
+@permission_classes([AllowAny])
+def siged(): #/manuais/siged
+
+    return 
+
+@api_view(["GET"]) 
+@permission_classes([AllowAny])
+def live():#/live
+    return 
 
