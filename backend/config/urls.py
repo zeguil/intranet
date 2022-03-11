@@ -18,6 +18,7 @@ from ramal.viewsets import RamalViewSet
 from setor.viewsets import SetorViewSet
 from users.viewsets import UsuariosViewSet
 
+from pages.views import Ramais,Info, Nivers, Noticias, Mural
 router = routers.DefaultRouter()
 
 # rotas
@@ -37,4 +38,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', obtain_auth_token),
     path('', include(router.urls)),
+    path('', include('pages.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -20,6 +20,7 @@ from banner.models import Banner
 from banner.serializers import BannerSerializer
 
 from comentario.models import Comentario
+from comentario.serializers import ComentarioSerializer
 from audit.models import Audit
 from audit.serializers import AuditSerializer
 from corporativo.models import Corporativo
@@ -159,7 +160,10 @@ class Mural(APIView):
         return dados
 
     def post(request):
-
+        serializer = ComentarioSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(request)
+        # return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         form = FormularioMural()
 
