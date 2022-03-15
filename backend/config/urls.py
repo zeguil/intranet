@@ -17,7 +17,7 @@ from funcionario.viewsets import FuncionarioViewSet
 from informativo.viewsets import InformativoViewSet
 from ramal.viewsets import RamalViewSet
 from setor.viewsets import SetorViewSet
-from users.viewsets import UsuariosList
+from users.viewsets import UsuariosViewSet
 
 from pages.views import Ramais,Info, Nivers, Noticias, Mural
 router = routers.DefaultRouter()
@@ -32,7 +32,7 @@ router.register(r'funcionario', FuncionarioViewSet)
 router.register(r'informativo', InformativoViewSet)
 router.register(r'ramal', RamalViewSet)
 router.register(r'setor', SetorViewSet)
-# router.register(r'usuarios', UsuariosViewSet, basename='UsuariosViewSet')
+router.register(r'usuarios', UsuariosViewSet, basename='UsuariosViewSet')
 
 
 
@@ -42,5 +42,5 @@ urlpatterns = [
     path('', include('pages.urls')),
     path('login/', TokenObtainPairView.as_view()), # obter o token
     path('refresh/', TokenRefreshView.as_view()), # atualizar um token expirado
-    path('usuarios/', UsuariosList.as_view()),
+    # path('usuarios/', UsuariosList.as_view()),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

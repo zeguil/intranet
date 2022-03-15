@@ -20,7 +20,7 @@ class UserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('cpf', 'admin', 'publisher')}
+            'fields': ('cpf','password', 'admin', 'publisher')}
         ),
     )
     search_fields = ['cpf']
