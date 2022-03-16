@@ -1,12 +1,4 @@
 
-# from . import home
-# from .forms import FormularioMural
-
-import requests
-
-import socket
-import os
-from bs4 import BeautifulSoup
 from datetime import datetime
 from django.shortcuts import render, redirect, HttpResponse
 from rest_framework.views import APIView
@@ -19,7 +11,6 @@ from rest_framework import status
 
 from banner.models import Banner
 from banner.serializers import BannerSerializer
-
 from comentario.models import Comentario
 from comentario.serializers import ComentarioSerializer
 from audit.models import Audit
@@ -30,13 +21,12 @@ from emails.models import Email
 from emails.serializers import EmailSerializer
 from funcionario.models import Funcionario
 from funcionario.serializers import FuncionarioSerializer
-
 from informativo.models import Informativo
 from informativo.serializers import InformativoSerializer
 from ramal.models import Ramal
 from ramal.serializers import RamalSerializer
 from setor.models import Setor
-from setor.serializers import SetorSerializer
+
 
 
 class Noticias(APIView):
