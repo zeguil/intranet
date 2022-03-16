@@ -15,6 +15,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny, IsAuthenticatedOrReadOnly
 from django.shortcuts import get_object_or_404
 from django.http import Http404
+from rest_framework import status
 
 from banner.models import Banner
 from banner.serializers import BannerSerializer
@@ -38,10 +39,6 @@ from setor.models import Setor
 from setor.serializers import SetorSerializer
 
 
-
-
-    
-
 class Noticias(APIView):
     def get(self, request, id):
         try:
@@ -52,8 +49,6 @@ class Noticias(APIView):
             raise Http404("Banner não encontrado....")
 
         return Response(serializer.data)
-
-
 
 class Nivers(APIView):
     def get(self, request):
@@ -161,35 +156,35 @@ class Mural(APIView):
 
     def post(request):
         serializer = ComentarioSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save(request)
-        # return Response(serializer.data, status=status.HTTP_201_CREATED)
+        if serializer.is_valid(raise_exception=True):
 
-        form = FormularioMural()
+            serializer.save(request)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
-        if form.validate_on_submit(request):
+        # form = FormularioMural()
 
-            com_add = Comentario(
-                com_nome=form.nome.data, conteudo=form.conteudo.data, func_id=id, data_env=datetime.now())
+        # if form.validate_on_submit(request):
 
-            ip = frq.environ.get('HTTP_X_REAL_IP', frq.remote_addr)
-            user = frq.remote_user
+        #     com_add = Comentario(
+        #         com_nome=form.nome.data, conteudo=form.conteudo.data, func_id=id, data_env=datetime.now())
 
-            try:
-                db.session.add(com_add)
-                db.session.flush()
+        #     try:
+        #         db.session.add(com_add)
+        #         db.session.flush()
 
-                audit = Audit(tabela='COMENTARIO', ip=ip, action='INSERT', hostname=socket.getfqdn(
-                    ip), usuario=user, createdon=datetime.now(), id_tab=com_add.id)
-                db.session.add(audit)
-                db.session.commit()
+        #         audit = Audit(tabela='COMENTARIO', ip=ip, action='INSERT', hostname=socket.getfqdn(
+        #             ip), usuario=user, createdon=datetime.now(), id_tab=com_add.id)
+        #         db.session.add(audit)
+        #         db.session.commit()
 
-                flash('Mensagem enviada!')
+        #         flash('Mensagem enviada!')
 
-            except:
-                raise('Error: Não foi possível enviar a mensagem!')
+        #     except:
+        #         raise('Error: Não foi possível enviar a mensagem!')
 
-            return redirect('home.mural', id=func.id)
+        #     return redirect('home.mural', id=func.id)
 
     
 
