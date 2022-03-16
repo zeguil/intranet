@@ -12,7 +12,8 @@ class Banner(models.Model):
     data_pub = models.DateField(auto_now_add=True)
     state = models.IntegerField(default=0)
     ordem = models.IntegerField(null=True)
-    link_externo = models.CharField(max_length=255)
+    link_externo = models.URLField(max_length=255)
 
     def __str__(self):
         return f'Banner: {self.titulo}'
+        

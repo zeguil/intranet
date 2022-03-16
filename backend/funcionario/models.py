@@ -4,7 +4,7 @@ from uuid import uuid4
 
 
 class Funcionario(models.Model):
-    nome = models.CharField(max_length=60)
+    func_nome = models.CharField(max_length=60)
     dia_nasc = models.IntegerField()
     mes_nasc = models.CharField(max_length=20)
     setor_id = models.ForeignKey(Setor, on_delete=models.CASCADE)
