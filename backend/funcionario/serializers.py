@@ -8,4 +8,4 @@ class FuncionarioSerializer(ModelSerializer):
 
     class Meta:
         model = Funcionario
-        fields = ('nome', 'dia_nasc', 'mes_nasc', 'setor_id', 'comentarios')
+        fields = ('func_nome', 'dia_nasc', 'mes_nasc', 'setor_id', 'comentarios')

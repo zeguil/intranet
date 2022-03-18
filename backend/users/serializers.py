@@ -19,12 +19,16 @@ class UserSerializer(serializers.ModelSerializer):
 
     publisher = serializers.BooleanField(
         label="Publicador",
-        help_text="Indica que usuário é publicador."
+        help_text="Indica que o usuário é publicador."
     )
 
     admin = serializers.BooleanField(
         label="Administrador",
-        help_text="Indica que este usuário tem todas as permissões"
+        help_text="Indica que o usuário tem todas as permissões"
+    )
+    is_active = serializers.BooleanField(
+        label="Ativo",
+        help_text="Indica que o usuário esta ativo"
     )
 
 
@@ -45,7 +49,7 @@ class UserSerializer(serializers.ModelSerializer):
             is_staff=self.validated_data['admin']
             
         )
-        print("###########TESTE###########")
+
         password = self.validated_data['password']
         password_confirm = self.validated_data['password_confirm']
 
